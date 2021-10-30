@@ -55,7 +55,11 @@ function App() {
                 deleteHandler={deleteHandler}
                 filter={filter}
             />
-            <Filters todos={todos} changeFilter={changeFilter} />
+            <Filters
+                todos={todos}
+                changeFilter={changeFilter}
+                filter={filter}
+            />
             <Footer />
         </div>
     );
