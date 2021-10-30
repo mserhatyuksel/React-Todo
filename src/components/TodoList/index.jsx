@@ -1,9 +1,21 @@
 import { useEffect, useState } from "react";
 
-const TodoList = ({ todos, onChangeTodo, deleteHandler, filter }) => {
+const TodoList = ({
+    todos,
+    onChangeTodo,
+    deleteHandler,
+    filter,
+    allCheckHandler,
+}) => {
     const [filteredTodos, setFilteredTodos] = useState(todos);
+    const [isAllChecked, setIsAllChecked] = useState(false);
     useEffect(() => {
         setFilteredTodos(todos);
+        if (todos.filter((item) => !item.isCompleted).length === 0) {
+            setIsAllChecked(true);
+        } else {
+            setIsAllChecked(false);
+        }
     }, [todos]);
     useEffect(() => {
         if (filter === "active") {
@@ -13,11 +25,33 @@ const TodoList = ({ todos, onChangeTodo, deleteHandler, filter }) => {
         } else {
             setFilteredTodos(todos);
         }
-    }, [filter]);
+    }, [filter, todos]);
+    const allCheck = () => {
+        if (isAllChecked) {
+            allCheckHandler(true);
+            setIsAllChecked(false);
+        } else {
+            allCheckHandler(false);
+            setIsAllChecked(true);
+        }
+    };
     return (
         <section className="main">
-            <input className="toggle-all" type="checkbox" />
-            <label htmlFor="toggle-all">Mark all as complete</label>
+            {todos.length ? (
+                <>
+                    <input
+                        className="toggle-all"
+                        type="checkbox"
+                        checked={isAllChecked}
+                        readOnly={true}
+                    />
+                    <label htmlFor="toggle-all" onClick={allCheck}>
+                        Mark all as complete
+                    </label>
+                </>
+            ) : (
+                ""
+            )}
 
             <ul className="todo-list">
                 {filteredTodos.map((todo) => {
@@ -30,7 +64,8 @@ const TodoList = ({ todos, onChangeTodo, deleteHandler, filter }) => {
                                 <input
                                     className="toggle"
                                     type="checkbox"
-                                    onClick={() => onChangeTodo(todo)}
+                                    onChange={() => onChangeTodo(todo)}
+                                    checked={todo.isCompleted}
                                 />
                                 <label>{todo.todo}</label>
                                 <button

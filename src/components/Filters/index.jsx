@@ -1,6 +1,6 @@
 import React from "react";
 
-const Filters = ({ todos, changeFilter, filter }) => {
+const Filters = ({ todos, changeFilter, filter, clearCompleted }) => {
     if (todos.length < 1) {
         return null;
     }
@@ -41,8 +41,11 @@ const Filters = ({ todos, changeFilter, filter }) => {
                     </a>
                 </li>
             </ul>
-
-            <button className="clear-completed">Clear completed</button>
+            {uncompleted !== todos.length && (
+                <button onClick={clearCompleted} className="clear-completed">
+                    Clear completed
+                </button>
+            )}
         </footer>
     );
 };

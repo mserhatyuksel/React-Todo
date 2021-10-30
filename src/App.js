@@ -5,8 +5,9 @@ import TodoList from "./components/TodoList";
 import Footer from "./components/Footer";
 function App() {
     const [todos, setTodos] = useState([
-        { id: 1, todo: "test", isCompleted: false },
-        { id: 2, todo: "test2", isCompleted: false },
+        { id: 1, todo: "Learn JavaScript", isCompleted: true },
+        { id: 2, todo: "Learn React", isCompleted: false },
+        { id: 3, todo: "Have a life!", isCompleted: false },
     ]);
     const [input, setInput] = useState("");
     const [filter, setFilter] = useState("all");
@@ -27,7 +28,6 @@ function App() {
         setInput(e.target.value);
     };
     const onChangeTodo = (todo) => {
-        // const temp = ;
         setTodos(
             todos.map((item) => {
                 return item.id === todo.id
@@ -42,6 +42,24 @@ function App() {
     const changeFilter = (filter) => {
         setFilter(filter);
     };
+    const clearCompleted = () => {
+        setTodos(todos.filter((item) => !item.isCompleted));
+    };
+    const allCheckHandler = (isAllChecked) => {
+        if (isAllChecked) {
+            setTodos(
+                todos.map((obj) => {
+                    return { ...obj, isCompleted: false };
+                })
+            );
+        } else {
+            setTodos(
+                todos.map((obj) => {
+                    return { ...obj, isCompleted: true };
+                })
+            );
+        }
+    };
     return (
         <div className="App">
             <Input
@@ -54,11 +72,13 @@ function App() {
                 onChangeTodo={onChangeTodo}
                 deleteHandler={deleteHandler}
                 filter={filter}
+                allCheckHandler={allCheckHandler}
             />
             <Filters
                 todos={todos}
                 changeFilter={changeFilter}
                 filter={filter}
+                clearCompleted={clearCompleted}
             />
             <Footer />
         </div>
