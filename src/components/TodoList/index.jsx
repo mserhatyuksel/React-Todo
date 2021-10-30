@@ -1,21 +1,30 @@
-import React from "react";
-
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, onChangeTodo, deleteHandler }) => {
     return (
         <section className="main">
             <input className="toggle-all" type="checkbox" />
             <label htmlFor="toggle-all">Mark all as complete</label>
 
             <ul className="todo-list">
-                {todos.map((todo, i) => {
-                  // className="completed"
-                   return <li key={i} >
-                        <div className="view">
-                            <input className="toggle" type="checkbox" />
-                            <label>{todo}</label>
-                            <button className="destroy"></button>
-                        </div>
-                    </li>;
+                {todos.map((todo) => {
+                    return (
+                        <li
+                            key={todo.id}
+                            className={todo.isCompleted ? "completed" : ""}
+                        >
+                            <div className="view">
+                                <input
+                                    className="toggle"
+                                    type="checkbox"
+                                    onClick={() => onChangeTodo(todo)}
+                                />
+                                <label>{todo.todo}</label>
+                                <button
+                                    className="destroy"
+                                    onClick={() => deleteHandler(todo)}
+                                ></button>
+                            </div>
+                        </li>
+                    );
                 })}
             </ul>
         </section>
