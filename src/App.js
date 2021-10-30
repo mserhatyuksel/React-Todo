@@ -54,7 +54,7 @@ function App() {
                 onChangeTodo={onChangeTodo}
                 deleteHandler={deleteHandler}
             />
-            <Filters />
+            <Filters todos={todos} />
             <Footer />
         </div>
     );
