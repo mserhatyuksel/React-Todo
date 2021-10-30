@@ -9,10 +9,8 @@ function App() {
         { id: 2, todo: "test2", isCompleted: false },
     ]);
     const [input, setInput] = useState("");
-
-    const addTodo = (todo) => {
-        setTodos([...todos, todo]);
-    };
+    const [filter, setFilter] = useState("all");
+    // Add todo
     const onSubmitTodo = (e) => {
         e.preventDefault();
         setTodos([
@@ -41,10 +39,12 @@ function App() {
     const deleteHandler = (todo) => {
         setTodos(todos.filter((item) => item.id !== todo.id));
     };
+    const changeFilter = (filter) => {
+        setFilter(filter);
+    };
     return (
         <div className="App">
             <Input
-                addTodo={addTodo}
                 value={input}
                 onSubmitTodo={onSubmitTodo}
                 onChangeInput={onChangeInput}
@@ -53,8 +53,9 @@ function App() {
                 todos={todos}
                 onChangeTodo={onChangeTodo}
                 deleteHandler={deleteHandler}
+                filter={filter}
             />
-            <Filters todos={todos} />
+            <Filters todos={todos} changeFilter={changeFilter} />
             <Footer />
         </div>
     );

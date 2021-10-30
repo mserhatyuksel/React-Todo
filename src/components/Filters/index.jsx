@@ -1,6 +1,6 @@
 import React from "react";
 
-const Filters = ({ todos }) => {
+const Filters = ({ todos, changeFilter }) => {
     if (todos.length < 1) {
         return null;
     }
@@ -14,15 +14,23 @@ const Filters = ({ todos }) => {
 
             <ul className="filters">
                 <li>
-                    <a href="/#" className="selected">
+                    <a
+                        href="/#"
+                        onClick={() => changeFilter("all")}
+                        className="selected"
+                    >
                         All
                     </a>
                 </li>
                 <li>
-                    <a href="/#">Active</a>
+                    <a href="/#" onClick={() => changeFilter("active")}>
+                        Active
+                    </a>
                 </li>
                 <li>
-                    <a href="/#">Completed</a>
+                    <a href="/#" onClick={() => changeFilter("completed")}>
+                        Completed
+                    </a>
                 </li>
             </ul>
 
